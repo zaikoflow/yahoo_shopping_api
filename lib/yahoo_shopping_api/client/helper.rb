@@ -21,6 +21,10 @@ module YahooShoppingApi
         handler connection(method).post {|req| req.body = request_body(args)}
       end
 
+      def xml_post(method, xml)
+        handler connection(method).post {|req| req.body = xml }
+      end
+
       def request_body(args)
         if args.class == Array
           if args[0].class == Hash

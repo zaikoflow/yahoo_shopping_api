@@ -10,10 +10,16 @@ module YahooShoppingApi
           self.define_singleton_method(key.underscore) {value[0]}
         end
 
-        if json["Result"].size == 1
-          json["Result"][0].each {|key, value| define_singleton_method(key.underscore) {value[0]}}
+        if json["Search"]
+          key = "Search"
         else
-          json["Result"].each {|item| self << Result.new(item)}
+          key = "Result"
+        end
+
+        if json[key].size == 1
+          json[key][0].each {|key, value| define_singleton_method(key.underscore) {value[0]}}
+        else
+          json[key].each {|item| self << Result.new(item)}
         end
       end
     end
