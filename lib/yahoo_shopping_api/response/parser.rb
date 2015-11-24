@@ -1,8 +1,11 @@
 module YahooShoppingApi
   module Response
     class Parser < Array
+      attr_reader :body
+
       def initialize(xml)
         raise ArgumentError, "Argument is must be a XML Document." unless xml.class == String
+        @body = xml
         json = XmlSimple.xml_in(xml)
 
         json.each do |key, value|
