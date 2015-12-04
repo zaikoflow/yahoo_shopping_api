@@ -8,9 +8,10 @@ module YahooShoppingApi
       TEST_ENDPOINT = "https://test.circus.shopping.yahooapis.jp/ShoppingWebService/V1/"
 
       def initialize(args)
-        @access_token = args[:access_token]
-        @seller_id = args[:seller_id]
-        @endpoint = args[:test] ? TEST_ENDPOINT : ENDPOINT
+        @access_token    = args[:access_token]
+        @seller_id       = args[:seller_id]
+        @request_options = args[:request_options] || {}
+        @endpoint        = args[:test] ? TEST_ENDPOINT : ENDPOINT
       end
 
       def get_request(method, args="")
@@ -59,7 +60,7 @@ module YahooShoppingApi
       end
 
       def connection(method)
-        Faraday.new(:url => endpoint + method) do |c|
+        Faraday.new(@request_options.merge(url: endpoint + method)) do |c|
           c.adapter Faraday.default_adapter
           c.headers['Authorization'] = "Bearer " + access_token
         end
