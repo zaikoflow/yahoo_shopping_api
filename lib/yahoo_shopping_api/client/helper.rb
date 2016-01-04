@@ -3,7 +3,7 @@ require 'faraday'
 module YahooShoppingApi
   module Client
     class Helper
-      attr_accessor :access_token, :seller_id, :endpoint
+      attr_accessor :access_token, :seller_id, :endpoint, :response
       ENDPOINT = "https://circus.shopping.yahooapis.jp/ShoppingWebService/V1/"
       TEST_ENDPOINT = "https://test.circus.shopping.yahooapis.jp/ShoppingWebService/V1/"
 
@@ -15,15 +15,18 @@ module YahooShoppingApi
       end
 
       def get_request(method, args="")
-        handler connection(method).get {|req| req.params[:seller_id] = @seller_id; req.params[:item_code] = args if args.present? }
+        @response = connection(method).get {|req| req.params[:seller_id] = @seller_id; req.params[:item_code] = args if args.present? }
+        handler @response
       end
 
       def post(method, args)
-        handler connection(method).post {|req| req.body = request_body(args)}
+        @response = connection(method).post {|req| req.body = request_body(args)}
+        handler @response
       end
 
       def xml_post(method, xml)
-        handler connection(method).post {|req| req.body = xml }
+        @response = connection(method).post {|req| req.body = xml }
+        handler @response
       end
 
       def request_body(args)
