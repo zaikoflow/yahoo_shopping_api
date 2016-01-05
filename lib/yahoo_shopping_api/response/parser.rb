@@ -4,7 +4,7 @@ module YahooShoppingApi
       attr_reader :body
 
       def initialize(xml)
-        raise ArgumentError, "Argument is must be a XML Document." unless xml.class == String
+        raise ArgumentError, "Argument is must be a XML Document: #{xml}" unless xml.class == String
         @body = xml
         json = XmlSimple.xml_in(xml)
 
