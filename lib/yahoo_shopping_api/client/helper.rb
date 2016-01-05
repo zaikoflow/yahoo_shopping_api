@@ -59,6 +59,8 @@ module YahooShoppingApi
           raise ApiSystemError, request.body
         when 503
           raise SystemMaintenance, request.body
+        else
+          raise UnknowError, "Unknow error: (status: #{request.status} body: #{request.body})"
         end
       end
 

@@ -13,4 +13,5 @@ module YahooShoppingApi
   class PermissionError < StandardError; end
   class ApiSystemError < StandardError; end
   class SystemMaintenance < StandardError; end
+  class UnknowError < StandardError; end
 end
