@@ -9,6 +9,19 @@ module YahooShoppingApi
         Response::Order.new get_request('orderCount')
       end
 
+      def info(args)
+xml = <<-XML
+<Req>
+<Target>
+<OrderId>#{args[:OrderId]}</OrderId>
+<Field>OrderId,ItemId,ProductId</Field>
+</Target>
+<SellerId>#{seller_id}</SellerId>
+</Req>
+XML
+        Response::Order.new xml_post('orderInfo', xml)
+      end
+
       def list(args)
 xml = <<-XML
 <Req>
